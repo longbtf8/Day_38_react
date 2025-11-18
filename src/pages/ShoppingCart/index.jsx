@@ -43,10 +43,10 @@ const ShoppingCart = () => {
             <div className=" invisible group-hover:visible opacity-0 group-hover:opacity-100 absolute right-0 top-full w-xl bg-blue-400 p-4 transition-all duration-300 ">
               <h3 className="border-b-2">Giỏ hàng</h3>
               {items.map((item) => (
-                <div key={item.id}>
+                <div key={item.id} className="border-b-2 pb-1">
                   <div className="mt-2">
                     <p className="text-green-400">
-                      {item.brand} - {item.category}
+                      {item.title} - {item.category}
                     </p>
                     <p>Giá : {item.price}</p>
                   </div>
@@ -86,7 +86,7 @@ const ShoppingCart = () => {
                   </div>
                 </div>
               ))}
-              <div className=" mt-2 border-t-2">
+              <div className=" mt-2">
                 <p className="text-green-400">Tổng tiền : {totalPrice}</p>
                 <div
                   className="border-2 inline-block text-red-500"
