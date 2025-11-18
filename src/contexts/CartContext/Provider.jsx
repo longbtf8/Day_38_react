@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import CartContext from "./Context";
 import reducer from "../../pages/ShoppingCart/reducer";
 import ACTIONS from "../../pages/ShoppingCart/constant";
@@ -11,7 +11,22 @@ const initialState = {
 };
 
 const Provider = ({ children }) => {
-  const [cart, dispatch] = useReducer(reducer, initialState);
+  const [cart, dispatch] = useReducer(reducer, initialState, (initial) => {
+    try {
+      const savedCart = localStorage.getItem("cart");
+      return savedCart ? JSON.parse(savedCart) : initial;
+    } catch (error) {
+      console.error(error);
+      return initial;
+    }
+  });
+  useEffect(() => {
+    try {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    } catch (error) {
+      console.error(error);
+    }
+  }, [cart]);
   const values = {
     items: cart.items,
     totalQuantity: cart.totalQuantity,

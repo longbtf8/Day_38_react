@@ -9,7 +9,7 @@ import { CartProvider } from "./contexts/CartContext";
 function App() {
   return (
     <>
-      <Router>
+      <Router basename="/Day_38_react/">
         <Routes>
           <Route element={<DefaultLayout />}>
             <Route path="/" element={<Home />} />
