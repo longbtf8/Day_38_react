@@ -36,9 +36,50 @@ const reducer = (state, action) => {
         totalQuantity: totalQuantity,
       };
     }
+    case ACTIONS.UPDATE_QUANTITY: {
+      const { productId, quantity } = action.payload;
 
-    default:
-      break;
+      const newItems = state.items.map((item) => {
+        if (item.id === productId) {
+          let newQuantity = (item.quantity += quantity);
+          return { ...item, quantity: newQuantity };
+        }
+        return item;
+      });
+      const { totalPrice, totalQuantity } = calculateTotals(newItems);
+
+      return {
+        items: newItems,
+        totalPrice: totalPrice,
+        totalQuantity: totalQuantity,
+      };
+    }
+    case ACTIONS.REMOVE_FROM_CART: {
+      const productId = action.payload;
+      const idx = state.items.findIndex((item) => item.id === productId);
+      if (idx === -1) {
+        return state;
+      }
+      const newItems = [...state.items];
+      newItems.splice(idx, 1);
+      const { totalPrice, totalQuantity } = calculateTotals(newItems);
+
+      return {
+        items: newItems,
+        totalPrice: totalPrice,
+        totalQuantity: totalQuantity,
+      };
+    }
+    case ACTIONS.CLEAR_CART: {
+      return {
+        items: [],
+        totalQuantity: 0,
+        totalPrice: 0,
+      };
+    }
+    default: {
+      throw new Error("type cart invalid ");
+    }
   }
 };
 export default reducer;

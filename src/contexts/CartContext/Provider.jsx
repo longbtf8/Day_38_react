@@ -22,9 +22,26 @@ const Provider = ({ children }) => {
         payload: product,
       });
     },
-    removeFromCart: () => {},
-    updateQuantity: () => {},
-    clearCart: () => {},
+    removeFromCart: (productId) => {
+      dispatch({
+        type: ACTIONS.REMOVE_FROM_CART,
+        payload: productId,
+      });
+    },
+    updateQuantity: (productId, quantity) => {
+      dispatch({
+        type: ACTIONS.UPDATE_QUANTITY,
+        payload: {
+          productId,
+          quantity,
+        },
+      });
+    },
+    clearCart: () => {
+      dispatch({
+        type: ACTIONS.CLEAR_CART,
+      });
+    },
   };
   return <CartContext.Provider value={values}>{children}</CartContext.Provider>;
 };
